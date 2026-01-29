@@ -1,0 +1,21 @@
+{
+  "name": "Vemonbot2",
+  "version": "0.2",
+  "description": "🤖 Bot personalizado usando Baileys",
+  "author": "Vemonzinho",
+  "license": "MIT",
+  "main": "temux.js",
+  "scripts": {
+    "start": "node temux.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "axios": "^1.11.0",
+    "chalk": "^4.1.2",
+    "dotenv": "^17.2.3",
+    "performance-now": "^2.1.0",
+    "pino": "^9.7.0",
+    "puppeteer": "^24.36.1",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
