@@ -123,6 +123,12 @@ async function startBot(usePairingCode = false, phoneNumber = null) {
             console.log('📷 QR Code Recebido')
         }
 
+const fs = require('fs')
+
+// ... (existing imports)
+
+// ...
+
         if (connection === 'close') {
             const reason = lastDisconnect.error?.output?.statusCode
             const shouldReconnect = reason !== DisconnectReason.loggedOut
@@ -131,8 +137,16 @@ async function startBot(usePairingCode = false, phoneNumber = null) {
             connectionStatus = 'disconnected'
 
             if (reason === DisconnectReason.loggedOut) {
-                console.log('🚪 Dispositivo desconectado via celular. Apagando sessão...')
-                // Opcional: Limpar pasta session aqui se desejar
+                console.log('🚪 Dispositivo desconectado via celular. Apagando sessão e reiniciando...')
+                try {
+                    fs.rmSync('./session', { recursive: true, force: true })
+                    console.log('🗑️ Pasta session apagada com sucesso.')
+                } catch (err) {
+                    console.error('⚠️ Erro ao apagar pasta session:', err)
+                }
+                // Força o reinício para gerar novo QR Code
+                setTimeout(() => startBot(usePairingCode, phoneNumber), 1000)
+                return // Sai da função para evitar reconexão duplicada
             }
 
             if (shouldReconnect && shouldRestart) {
